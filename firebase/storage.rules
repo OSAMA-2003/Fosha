@@ -1,0 +1,24 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isSignedIn() { return request.auth != null; }
+    function uid() { return request.auth.uid; }
+    function isAdmin() {
+      // Storage rules can't call Firestore `exists` directly.
+      // We use a custom claim in production. For now, keep admin-only paths
+      // guarded at the app layer + Functions.
+      return false;
+    }
+
+    match /avatars/{userId}/{allPaths=**} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && userId == uid();
+    }
+
+    match /driver_docs/{driverId}/{allPaths=**} {
+      allow read: if isSignedIn() && driverId == uid();
+      allow write: if isSignedIn() && driverId == uid();
+    }
+  }
+}
+

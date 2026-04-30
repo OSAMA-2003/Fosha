@@ -1,0 +1,30 @@
+name: fosha_workspace
+description: Monorepo workspace for FOSHA (فسحة).
+publish_to: 'none'
+
+environment:
+  sdk: ^3.11.5
+
+dev_dependencies:
+  melos: ^7.5.1
+
+workspace:
+  - apps/passenger
+  - apps/driver
+  - apps/admin_web
+  - packages/shared
+
+melos:
+  scripts:
+    format:
+      run: melos exec -- dart format .
+      description: Format Dart code in all packages.
+    analyze:
+      run: melos exec -- flutter analyze
+      description: Run `flutter analyze` in all packages.
+    test:
+      run: melos exec -- flutter test
+      description: Run `flutter test` in all packages.
+    check:
+      run: melos run format && melos run analyze && melos run test
+      description: Format + analyze + test (all packages).

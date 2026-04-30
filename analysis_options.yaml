@@ -1,0 +1,16 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    # We treat infos as warnings to keep the bar high.
+    todo: warning
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    always_declare_return_types: true
+    avoid_types_on_closure_parameters: true
+    avoid_unused_constructor_parameters: true
+    directives_ordering: true
+    prefer_final_locals: true
+    require_trailing_commas: true
